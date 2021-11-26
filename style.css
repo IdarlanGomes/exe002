@@ -1,0 +1,35 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    width: 50%;
+    max-width: 800px;
+    min-width: 350px;
+    margin: 0 auto;
+}
+
+h1{
+    align-items: center;
+    text-align: center;
+    color: rgb(2, 131, 136);
+    background-color: rgba(243, 240, 52, 0.479);
+    border-radius: 5px;
+}
+
+.instrucoes{
+    background-color: lightblue;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.473);
+}
+
+.ultimoResultado{
+    color: rgb(255, 255, 255);
+    padding: 3px;
+}
+
+.envioPalpite{
+    margin: 15px 0 15px 0;
+}
+
