@@ -12,13 +12,13 @@ body{
 h1{
     align-items: center;
     text-align: center;
-    color: rgb(2, 131, 136);
-    background-color: rgba(243, 240, 52, 0.479);
+    color: white;
+    background-color: red;
     border-radius: 5px;
 }
 
 .instrucoes{
-    background-color: lightblue;
+    background-color:rgba(255, 255, 0, 0.418);
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.473);
@@ -30,6 +30,16 @@ h1{
 }
 
 .envioPalpite{
+   
     margin: 15px 0 15px 0;
+    border: none;
+    background-color: rgb(253, 104, 4);
+    color: white;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 12pt;
+    font-weight: bold;
+    cursor: pointer;
 }
+
 

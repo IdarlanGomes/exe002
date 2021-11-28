@@ -33,6 +33,7 @@ A primeira é usada para armazenar a contagem dos palpites do usuário, e a segu
 
 var contagemPalpites = 1;
 var botaoReinicio;
+campoPalpite.focus();
 
 function conferirPaplite(){
     var palpiteUsuario = Number(campoPalpite.value); //declara uma variável chamada palpiteUsuario e define seu valor igual ao valor inserido pelo jogador no campo de texto. Nós também rodamos esse valor através do método embutido Number(), apenas para ter certeza de que o valor inserido é um número.
@@ -45,7 +46,7 @@ function conferirPaplite(){
     O primeiro if(){ } confere se o palpite do jogador é igual ao número aleatório (numeroAleatorio) definido no topo do nosso JavaScript. Se for, o jogador adivinhou corretamente o número e venceu o jogo. Então mostramos ao jogador uma mensagem de parabenização com uma agradável cor verde, limpamos o conteúdo do parágrado que informa sobre o palpite ser alto ou baixo <p class="baixoOuAlto"></p>, e executamos uma função chamada configFimDeJogo(), que iremos discutir mais tarde.    
     */
     if (palpiteUsuario === numeroAleatorio){
-        ultimoResultado.textContent = 'Parabéns! Você acertou!';
+        ultimoResultado.textContent = `Parabéns! Você acertou em ${contagemPalpites} tentativas!`;
         ultimoResultado.style.backgroundColor = 'green';
         ultimoResultado.style.borderRadius = '5px';
         ultimoResultado.style.textAlign = 'center';
@@ -73,6 +74,7 @@ function conferirPaplite(){
     }else{
         ultimoResultado.textContent = 'Errado!';
         ultimoResultado.style.backgroundColor = 'red';
+        ultimoResultado.style.fontWeight='bold';
         ultimoResultado.style.borderRadius = '5px';
         ultimoResultado.style.textAlign = 'center';
         ultimoResultado.style.padding = '25px';
@@ -98,5 +100,55 @@ function conferirPaplite(){
 /*Aqui nós estamos adicionando um event listener ao botão envioPalpite. Esse é um método que aceita a inserção de dois valores (chamados de argumentos) — o tipo de envento que estamos monitorando (neste caso o evento click) como um string (sequência de texto), e o código que queremos executar quando o evento ocorrer (neste caso a função conferirPalpite() — note que não temos que especificar os parênteses quando estivermos escrevendo dentro de addEventListener()).*/
 
 envioPalpite.addEventListener('click', conferirPaplite);
+/*
+As primeiras duas linhas desabilitam a entrada de texto do formulário e o clique do botão, definindo a propriedade disabled (desabilitado) de cada um como true (verdadeiro). Isso é necessário, pois se não o fizermos, o usuário poderia submeter mais palpites depois do jogo ter terminado, o que iria bagunçar as coisas.
+*/
+function configFimDeJogo(){
+    campoPalpite.disabled=true;
+    envioPalpite.disabled=true;
+    
+/*
+As próximas três linhas geram um novo elemento <button>, define o texto de seu rótulo como "Iniciar novo jogo", e o adiciona ao final do nosso HTML existente.
+*/    
+    botaoReinicio=document.createElement('button');
+    botaoReinicio.textContent='Iniciar novo jogo';   
+    botaoReinicio.style.backgroundColor=('green');
+    botaoReinicio.style.color=('white');
+    botaoReinicio.style.cursor=('pointer');
+    botaoReinicio.style.padding=('15px');
+    botaoReinicio.style.border=('none');
+    botaoReinicio.style.fontSize=('12pt');
+    botaoReinicio.style.fontWeight=('bold');
+    botaoReinicio.style.borderRadius=('5px');
+    envioPalpite.style.cursor=('default');
 
-//Parei aqui: https://developer.mozilla.org/pt-BR/docs/Learn/JavaScript/First_steps/A_first_splash#finalizando_a_funcionalidade_do_jogo
+    
+    document.body.appendChild(botaoReinicio);
+/*
+A linha final define um monitor de evento (event listener) em nosso botão, para que quando seja clicado, uma função chamada reiniciarJogo() seja executada.
+*/    
+    botaoReinicio.addEventListener('click', reiniciarJogo);
+}
+
+function reiniciarJogo(){
+    contagemPalpites=1; //Coloca o valor da variável contagemPalpites novamente igual a 1.
+
+    var reiniciarParas=document.querySelectorAll('.resultadoParas p'); 
+    for (var i=0; i<reiniciarParas.length; i++){
+        reiniciarParas[i].textContent=''; //Limpa todos os parágrafos de informativos.
+    }
+
+    botaoReinicio.parentNode.removeChild(botaoReinicio); //Remove o botão reset do nosso código.
+
+    /*Habilita os elementos do formulários, esvazia e direciona o foco ao campo de texto, pronto para que um novo palpite seja inserido.*/
+
+    campoPalpite.disabled=false;
+    envioPalpite.disabled=false;
+    envioPalpite.style.cursor=('pointer');
+    campoPalpite.value='';
+    campoPalpite.focus();
+
+    ultimoResultado.style.backgroundColor='white'; //Remove a cor de fundo do parágrafo ultimoResultado.
+
+    numeroAleatorio=Math.floor(Math.random()*100) +1; //Gera um novo número aleatório para que o jogador não esteja tentando adivinhar o mesmo número novamente!
+}
